@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { DiCoda } from 'react-icons/di'
 import { HiMenu, HiX } from 'react-icons/hi'
 import { Link } from 'react-router-dom';
 import { Button } from './Button';
 import './Navbar.css';
 function Navbar() {
-    const [click, setClick] = useState(false);
-    const [button, setButton] = useState(true);
+    const [click, setClick] = useState(false);//boolean toggle to check if the menu has been clicked
+    const [button, setButton] = useState(true);//boolean toggle to render the signup button in the ul
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
@@ -17,7 +17,12 @@ function Navbar() {
         }else {
             setButton(true);
         }
-    }
+    };
+
+    //this will run once on the first render
+    useEffect(() => {
+        showButton()
+    }, [])
 
     window.addEventListener('resize', showButton);
 
@@ -25,7 +30,7 @@ function Navbar() {
         <>
             <nav className='navbar'>
                 <div className='navbar-container'>
-                    <Link to='/' className='navbar-logo'>
+                    <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
                         TRVL <DiCoda className='fab fa-typo3'></DiCoda>
                     </Link>
                     <div className='menu-icon' onClick={handleClick}>
